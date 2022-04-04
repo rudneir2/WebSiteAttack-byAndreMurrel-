@@ -31,3 +31,5 @@ This will NOT be successful but will send a lot of SQL injection and XSS traffic
 ```
 curl -I -X HEAD -A "Mozilla/5.0 (compatible; MSIE 7.01; Windows NT 5.0)" http://52.249.241.69
 ```
+![image](https://user-images.githubusercontent.com/97529152/161603718-54a5655e-7c8a-476e-ad2f-bc2f111e5ae8.png)
+
